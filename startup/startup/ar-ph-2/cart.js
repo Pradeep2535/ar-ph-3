@@ -197,9 +197,18 @@ function decrement(index) {
 function removeItem(index) {
     const itemIndex = neededFoods[index];
     if (itemIndex !== undefined && foodItems[itemIndex]) {
+        
+        neededFoodsLength = neededFoods.length;
         foodItems.splice(itemIndex, 1);
-         
+        
         neededFoods.splice(index, 1);
+         neededFoods.pop();
+        cartCount = localStorage.getItem('cartCount');
+        
+        cartCount  = cartCount - neededFoodsLength;
+        
+        
+        localStorage.setItem('cartCount', cartCount);
         localStorage.setItem('neededFoods', JSON.stringify(neededFoods));
         renderFoodItems(neededFoods, foodItems);
     }
