@@ -207,3 +207,18 @@
             border-radius: 20px;
             text-decoration: none;
         }
+
+        .spinner {
+            border: 8px solid #f3f3f3;  /* Reduced thickness */
+            border-radius: 50%;
+            border-top: 8px solid #ff8a65;  /* Reduced thickness */
+            width: 60px;  /* Smaller width */
+            height: 60px;  /* Smaller height */
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -30px;  /* Half of the new height */
+            margin-left: -30px;  /* Half of the new width */
+        }
+        

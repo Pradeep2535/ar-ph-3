@@ -112,10 +112,10 @@ const foodItems = [{
         count: 0,
     },
 ];
-
+let neededFoods = JSON.parse(localStorage.getItem("neededFoods")) || [];
+let neededFoodsCount = JSON.parse(localStorage.getItem("needFoodsCount")) || [];
 document.addEventListener("DOMContentLoaded", function() {
-    let neededFoods = JSON.parse(localStorage.getItem("neededFoods")) || [];
-    let neededFoodsCount = JSON.parse(localStorage.getItem("needFoodsCount")) || [];
+    
 
     if (neededFoods.length > 0) {
         // Initialize food items counts from local storage
@@ -184,6 +184,7 @@ function decrement(index) {
     const itemIndex = neededFoods[index];
     if (foodItems[itemIndex] && foodItems[itemIndex].count > 0) {
         foodItems[itemIndex].count -= 1;
+
         document.getElementById(`counter-${index}`).innerText = foodItems[itemIndex].count;
         if (foodItems[itemIndex].count === 0) {
             removeItem(index);
@@ -197,6 +198,7 @@ function removeItem(index) {
     const itemIndex = neededFoods[index];
     if (itemIndex !== undefined && foodItems[itemIndex]) {
         foodItems.splice(itemIndex, 1);
+         
         neededFoods.splice(index, 1);
         localStorage.setItem('neededFoods', JSON.stringify(neededFoods));
         renderFoodItems(neededFoods, foodItems);
@@ -222,4 +224,46 @@ function updateTotals() {
     // Update cart count in localStorage
     const updatedCartCount = neededFoods.reduce((acc, index) => acc + (foodItems[index] ? foodItems[index].count : 0), 0);
     localStorage.setItem('cartCount', updatedCartCount);
+// --------------------------
 }
+const apiURL = 'https://s12j4nb21k.execute-api.ap-south-1.amazonaws.com/message/telFunc?token=7274047456:AAFlt1ylqNDj2Nbq-ddOaw9rnz-N-DF4RoE&chat_id=-4542112220&message=hello';
+const fetchBtn = document.getElementById('checkout-button');
+const retryBtn = document.getElementById('retryBtn');
+const spinner = document.getElementById('loaderOverlay');
+const spinner2=document.getElementById('spinner');
+
+fetchBtn.addEventListener('click', () => {
+    fetchAPI(); 
+});
+
+async function fetchAPI() {
+    spinner.style.display = 'block';
+    spinner2.style.display = 'block';
+    const response = await fetch(apiURL).catch(() => {
+        spinner.style.display = 'none';
+        spinner2.style.display = 'none';
+        showFailureDialog();
+        return null;  
+    });
+
+    spinner.style.display = 'none';
+    spinner2.style.display = 'none';
+
+    if (response && response.status === 200) {
+        spinner.style.display = 'block';
+        spinner2.style.display = 'block';
+        
+            window.location.href = 'success.html';
+            cartCount = 0;
+            neededFoods = [];
+            neededFoodsCount = [];
+        
+    } else if (response) {
+
+        window.location.href = 'failure.html';
+        showFailureDialog();
+    }
+}
+
+
+

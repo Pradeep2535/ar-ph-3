@@ -84,16 +84,16 @@
         <div>
 
             <!-- <a href='payment.html'> -->
+                
                 <div id="checkout-button">Checkout</div>
-            </a>
+           
         </div>
         
 
         <div class="overlay" id="loaderOverlay">
             <div class="loader" id="loader"></div>
         </div>
-        
-
+        <div id="spinner" class="spinner" style="display: none;"></div>
 
         <script src="cart.js"></script>
         <script>
@@ -158,7 +158,7 @@
             }
         
             // Attach event listener to the button
-            document.getElementById('checkout-button').onclick = redirectToPaymentLink;
+            // document.getElementById('checkout-button').onclick = redirectToPaymentLink;
         </script>
 </body>
 </html>
